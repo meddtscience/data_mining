@@ -32,8 +32,6 @@ newdata <- data.frame(y, x1, x2, x3_f_factor, x4, x5)
 #sütun isimleri görüntüleme
 names(newdata)
 
-# Kaç kategori olduğunu görmek için table() fonksiyonunu kullanıyorum
-table(newdata$x3_f_factor)
 
 head(newdata)
 
@@ -256,7 +254,6 @@ library(googlesheets4)
 
 getwd()
 setwd("C://Users/medda/OneDrive/Belgeler/datasets")
-data <- read_csv("C://Users/medda/OneDrive/Belgeler/datasets")
 
 #reading csv file
 
@@ -341,7 +338,7 @@ ggplot(clean_data, aes(x = phosphorus)) +
 
 
 
-ggplot(clean_data, aes(x = label, y = phosphorus)) +
+ggplot(clean_data, aes(x = label, y = phosphorus, fill=label)) +
   geom_boxplot() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
   labs(x = "Crop Type", y = "phosphorus", title = "Crop Phosphorus Levels by Type")
@@ -498,9 +495,33 @@ crop_model <- lm (x1_c ~ x2_c+x3_c+x4_c+x5_c+x6_c+x7_c)
 
 summary(crop_model)
 
+###Call:
+###lm(formula = x1_c ~ x2_c + x3_c + x4_c + x5_c + x6_c + x7_c)
+
+###Residuals:
+###  Min      1Q  Median      3Q     Max 
+###-69.390 -27.515  -5.147  28.174  86.592 
+
+###Coefficients:
+###  Estimate Std. Error t value Pr(>|t|)    
+###(Intercept) 23.30364    8.46687   2.752 0.005966 ** 
+###  x2_c        -0.19353    0.03678  -5.262 1.56e-07 ***
+###  x3_c        -0.02929    0.02485  -1.179 0.238642    
+###  x4_c        -0.27119    0.15657  -1.732 0.083399 .  
+###  x5_c         0.30302    0.03902   7.765 1.24e-14 ***
+###  x6_c         3.37392    0.99668   3.385 0.000724 ***
+###  x7_c         0.02363    0.01394   1.695 0.090230 .  
+###---
+###  Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+###Residual standard error: 35.3 on 2193 degrees of freedom
+###Multiple R-squared:  0.08844,	Adjusted R-squared:  0.08595 
+###F-statistic: 35.46 on 6 and 2193 DF,  p-value: < 2.2e-16
+###
+
 #burada diğer değişkenlerin nitrojen seviyelerini yordama katsayılarını görüntülüyebiliyorum
 #bazı değişkenler anlamlı yordayıcı olsalar da modelin kendisi anlamlı bir model değil r2 değeri oldukça düşük
-#%8 lik bir yordama kapasitesine sahip
+#%8 lik bir yordama kapasitesine sahip ve p value anlamlı değil. regresyon analizinde daha detaylı bunları analiz edebiliriz
 
 
 split <- sample.split(y_crop, SplitRatio = 0.7) # 70% eğitim, 30% test
@@ -539,6 +560,3 @@ for (crop in unique(clean_data$label)) {
   cat(paste("Value counts for", crop, ":\n"))
   print(table(clean_data$label == crop))
 }
-
-
-
