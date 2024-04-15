@@ -75,7 +75,7 @@ print(missing_columns)
 # Eksik değerlerin sayısını hesaplamak için sum() fonksiyonu kullanıyorum
 missing_values_count <- sum(is.na(newdata))
 
-# Toplam eksik değer sayısını yazdırıyorum
+# Toplam eksik değer sayısını yazdırın
 print(missing_values_count)
 
 #eksik verilerim gözükmüyor buna rağmen kategorik veriler için eksik veri olsaydı; ortalama ile doldurmak yerine 
@@ -119,6 +119,8 @@ summary(category_counts)
 
 # "D" kategorisine sahip gözlemleri sayma
 D_count <- sum(newdata$x3_categories == "D")
+
+# Sonucu yazdırma
 print(D_count)
 
 #sadece belirli bir değişken için boxplot grafiği çizme
@@ -134,7 +136,7 @@ summary(outliers)
 
 boxplot(mydata)
 
-#burada y değişkeninde de bir outlier görüntülüyorum
+#burada y değişkeninde de bir outlier gözüküyor
 
 ggplot(mydata, aes(y = y)) +
   geom_boxplot() +
@@ -313,7 +315,8 @@ ggplot(clean_data, aes(x = Nitrogen)) +
 #ihtiyaç duyabiliyormuş ama bunların sayısı daha az. Bunları boxplot ile tekrar kontrol edelim:
 
 # Etiketleri üst üste binmemesi için yazıları yan çevirerek boxplot oluşturma theme() kullanıyorum
-ggplot(clean_data, aes(x = label, y = Nitrogen)) +
+
+ggplot(clean_data, aes(x = label, y = Nitrogen, fill = label)) +
   geom_boxplot() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
   labs(x = "Crop Type", y = "Nitrogen", title = "Crop Nitrogen Levels by Type")
@@ -328,6 +331,16 @@ ggplot(clean_data, aes(x = phosphorus)) +
   labs(x = "Phosphorus", y = "Frekans", title = "Fosfor Dağılımı") +
   theme_minimal()
 
+
+ggplot(clean_data, aes(x = phosphorus)) +
+  geom_density(fill = "purple", alpha = 0.5) +
+  labs(x = "Phosphorus", y = "Density", title = "Phosphorus Distribution") +
+  theme_minimal()
+
+
+
+
+
 ggplot(clean_data, aes(x = label, y = phosphorus)) +
   geom_boxplot() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
@@ -341,20 +354,24 @@ ggplot(clean_data, aes(x = potassium)) +
   labs(x = "potassium", y = "Frekans", title = "Potasyum Dağılımı") +
   theme_minimal()
 
-ggplot(clean_data, aes(x = label, y = potassium)) +
+ggplot(clean_data, aes(x = label, y = potassium,fill = label)) +
   geom_boxplot() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
   labs(x = "Crop Type", y = "potassium", title = "Crop Potassium Levels by Type")
 
 
 #yine elma ve üzüm aynı zamanda yüksek potasyum seviyelerine ihtiyaç duyuyormuş.
+
+
 #temperature
 ggplot(clean_data, aes(x = temperature)) +
-  geom_histogram(binwidth = 5, fill = "skyblue", color = "black") +
+  geom_histogram(binwidth = 5, fill = "lightsalmon", color = "black") +
   labs(x = "temperature", y = "Frekans", title = "Sıcaklık Dağılımı") +
   theme_minimal()
 
-ggplot(clean_data, aes(x = label, y = temperature)) +
+
+
+ggplot(clean_data, aes(x = label, y = temperature,fill = label)) +
   geom_boxplot() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
   labs(x = "Crop Type", y = "temperature", title = "Crop Temperature Need Levels by Type")
@@ -364,23 +381,26 @@ ggplot(clean_data, aes(x = label, y = temperature)) +
 #aralığını tolere edebildiğini görüyoruz. 
 
 #humidity
+
 ggplot(clean_data, aes(x = humidity)) +
-  geom_histogram(binwidth = 5, fill = "skyblue", color = "black") +
-  labs(x = "humidity", y = "Frekans", title = "Nem Dağılımı") +
+  geom_density(fill = "lightblue", alpha = 0.5) +
+  labs(x = "humidity", y = "Density", title = "Humidity Distribution") +
   theme_minimal()
 
-ggplot(clean_data, aes(x = label, y = humidity)) +
+
+
+ggplot(clean_data, aes(x = label, y = humidity, fill=label)) +
   geom_boxplot() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
   labs(x = "Crop Type", y = "humidity", title = "Crop Humidity Need Levels by Type")
 
 #ph ölçümlerini daha iyi ayırt etmek için bindwith 1 ayarlıyorum
 ggplot(clean_data, aes(x = ph)) +
-  geom_histogram(binwidth = 1, fill = "skyblue", color = "black") +
+  geom_histogram(binwidth = 1, fill = "lightgreen", color = "black") +
   labs(x = "ph", y = "Frekans", title = "Ph Dağılımı") +
   theme_minimal()
 
-ggplot(clean_data, aes(x = label, y = ph)) +
+ggplot(clean_data, aes(x = label, y = ph, fill = label)) +
   geom_boxplot() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
   labs(x = "Crop Type", y = "ph", title = "Crop PH Need Levels by Type")
@@ -390,7 +410,7 @@ ggplot(clean_data, aes(x = rainfall)) +
   geom_histogram(binwidth = 5, fill = "skyblue", color = "black") +
   labs(x = "rainfall", y = "Frekans", title = "Yağış Dağılımı") +
   theme_minimal()
-ggplot(clean_data, aes(x = label, y = rainfall)) +
+ggplot(clean_data, aes(x = label, y = rainfall, fill = label)) +
   geom_boxplot() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
   labs(x = "Crop Type", y = "rainfall", title = "Crop Rainfall Levels by Type")
