@@ -75,7 +75,7 @@ print(missing_columns)
 # Eksik değerlerin sayısını hesaplamak için sum() fonksiyonu kullanıyorum
 missing_values_count <- sum(is.na(newdata))
 
-# Toplam eksik değer sayısını yazdırın
+# Toplam eksik değer sayısını yazdırıyorum
 print(missing_values_count)
 
 #eksik verilerim gözükmüyor buna rağmen kategorik veriler için eksik veri olsaydı; ortalama ile doldurmak yerine 
@@ -119,8 +119,6 @@ summary(category_counts)
 
 # "D" kategorisine sahip gözlemleri sayma
 D_count <- sum(newdata$x3_categories == "D")
-
-# Sonucu yazdırma
 print(D_count)
 
 #sadece belirli bir değişken için boxplot grafiği çizme
@@ -136,7 +134,7 @@ summary(outliers)
 
 boxplot(mydata)
 
-#burada y değişkeninde de bir outlier gözüküyor
+#burada y değişkeninde de bir outlier görüntülüyorum
 
 ggplot(mydata, aes(y = y)) +
   geom_boxplot() +
